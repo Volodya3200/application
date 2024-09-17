@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        // Docker registry credentials
         IMAGE = ""
     }
 
@@ -10,7 +9,6 @@ pipeline {
        
         stage('Checkout') {
             steps {
-                // Checkout application repository
                 git credentialsId: '163ec2a9-8a36-4ea0-bdb7-1698a9d137ad', url: 'https://github.com/Volodya3200/application.git', branch: 'main'
             }
         }
@@ -27,7 +25,6 @@ pipeline {
                     }
                 }
 
-                // Run the parse script to extract Docker image name
                 script {
                     IMAGE = sh(script: './scripts/parse.sh', returnStdout: true).trim()
                 }
@@ -39,8 +36,6 @@ pipeline {
             steps {
                 script {
                     echo "Building Docker image ${IMAGE}"
-
-                    // Build Docker image
                     sh "docker build -t ${IMAGE} ."
                 }
             }
@@ -50,7 +45,6 @@ pipeline {
             steps {
                 script {
                     echo "Pushing Docker image ${IMAGE}"
-
                     sh "docker login -u vvzlssk32 -p WSZ1399tyv347"
                     sh "docker push ${IMAGE}"
                 }
@@ -61,7 +55,6 @@ pipeline {
             steps {
                 script {
                     echo "Pulling Docker image ${IMAGE}"
-
                     sh "docker pull ${IMAGE}"
                 }
             }
