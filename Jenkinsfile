@@ -10,14 +10,14 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout application repository
-                git url: 'git@github.com:Volodya3200/application.git'
+                git url: 'https://github.com/Volodya3200/application.git'
             }
         }
 
         stage('Parse File') {
             steps {
                 // Checkout scripts repository to use the script
-                sh 'git clone git@github.com:Volodya3200/scripts.git'
+                sh 'git clone https://github.com/Volodya3200/scripts.git'
 
                 // Run the parse script to extract Docker image name
                 script {
