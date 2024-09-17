@@ -63,8 +63,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
+                    sh docker rm -f app_container || echo "No containers available for cleaning"
                     echo "Deploying Docker container ${IMAGE}"
-                    sh "docker run -d -p 127.0.0.2:80:80 ${IMAGE}"
+                    sh "docker run -d -p 127.0.0.2:80:80 --name app_container ${IMAGE}"
                 }
             }
         }
