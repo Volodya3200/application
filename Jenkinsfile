@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout application repository
-                git credentialsId: '6351342b-e3a4-4600-bda7-1328ed9edd3c', url: 'https://github.com/Volodya3200/application.git'
+                git credentialsId: '6351342b-e3a4-4600-bda7-1328ed9edd3c', url: 'https://github.com/Volodya3200/application.git', branch: 'main'
             }
         }
 
