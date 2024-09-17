@@ -13,7 +13,11 @@ pipeline {
                 // Удаляем директорию, если она существует
                 script {
                     if (fileExists('scripts')) {
-                        sh 'rm -rf scripts'
+                        dir('scripts') {
+                            sh 'git pull origin main'
+                        }
+                    } else {
+                        git branch: 'main', url: 'https://github.com/Volodya3200/scripts.git'
                     }
                 }
             }
