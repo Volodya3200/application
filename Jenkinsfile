@@ -7,21 +7,7 @@ pipeline {
     }
 
     stages {
-
-        stage('Prepare') {
-            steps {
-                // Удаляем директорию, если она существует
-                script {
-                    if (fileExists('scripts')) {
-                        dir('scripts') {
-                            sh 'git pull origin main'
-                        }
-                    } else {
-                        git branch: 'main', url: 'https://github.com/Volodya3200/scripts.git'
-                    }
-                }
-            }
-        }
+       
         stage('Checkout') {
             steps {
                 // Checkout application repository
@@ -31,8 +17,15 @@ pipeline {
 
         stage('Parse File') {
             steps {
-                // Checkout scripts repository to use the script
-                sh 'git clone https://github.com/Volodya3200/scripts.git'
+                script {
+                    if (fileExists('scripts')) {
+                        dir('scripts') {
+                            sh 'git pull origin main'
+                        }
+                    } else {
+                        sh 'git clone https://github.com/Volodya3200/scripts.git'
+                    }
+                }
 
                 // Run the parse script to extract Docker image name
                 script {
