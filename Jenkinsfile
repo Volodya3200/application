@@ -7,6 +7,17 @@ pipeline {
     }
 
     stages {
+
+        stage('Prepare') {
+            steps {
+                // Удаляем директорию, если она существует
+                script {
+                    if (fileExists('scripts')) {
+                        sh 'rm -rf scripts'
+                    }
+                }
+            }
+        }
         stage('Checkout') {
             steps {
                 // Checkout application repository
