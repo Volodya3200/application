@@ -24,7 +24,18 @@ pipeline {
                         sh 'git clone https://github.com/Volodya3200/scripts.git'
                     }
                 }
+                script {
+                    def parsedVars = sh(script: './scripts/parse.sh', returnStdout: true).trim()
 
+                    parsedVars.split("\n").each { line ->
+                        def key = line.split("=")[0]
+                        def value = line.split("=")[1]
+                        env."${key}" = value
+                        echo "Set environment variable: ${key}=${value}"
+                    }
+                    
+                    IMAGE = "${repo}/${app}:${tag}".replace(" ", "")
+                }
                 script {
                     IMAGE = sh(script: './scripts/parse.sh', returnStdout: true).trim()
                 }
